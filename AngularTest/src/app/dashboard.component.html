@@ -1,0 +1,9 @@
+<h3>Top Targets</h3>
+<div class="grid grid-pad">
+  <a *ngFor="let target of targets" [routerLink]="['/detail', target.id]" class="col-1-4">
+    <div class="module target">
+      <h4>{{target.name}}</h4>
+    </div>
+  </a>
+</div>
+<target-search></target-search>

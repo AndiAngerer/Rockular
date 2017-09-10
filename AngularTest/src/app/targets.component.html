@@ -1,0 +1,22 @@
+<h2>Add new target</h2>
+<div>
+    <label>Target name:</label> <input #targetName />
+    <button (click)="add(targetName.value); targetName.value=''">Add</button>
+</div>
+<h2>Known targets</h2>
+<ul class="targets">
+    <li *ngFor="let target of targets" [class.selected]="target===selectedTarget" (click)="onSelect(target)">
+        <span class="badge">{{target.id}}</span>
+        {{target.name}}
+        <span>
+            <button class="delete"(click)="delete(target); $event.stopPropagation()">x</button>
+        </span>
+        <span>
+            <button class="edit" (click)="gotoDetail(target)">e</button>
+        </span>
+    </li>
+</ul>
+<div *ngIf="selectedTarget">
+    <h2>{{selectedTarget.name | uppercase}} is active.</h2>
+    <button (click)="gotoSelectedDetail()">View Details</button>
+</div>

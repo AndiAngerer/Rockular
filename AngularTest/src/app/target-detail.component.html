@@ -1,0 +1,10 @@
+<div *ngIf="target">
+    <h2>Current target: {{target.name}}</h2>
+    <div><label>id: </label>{{target.id}}</div>
+    <div>
+        <label>name: </label>
+        <input [(ngModel)]="target.name" placeholder="name">
+    </div> 
+</div>
+<button (click)="saveAndGoBack()">Save & Back</button>
+<button (click)="goBack()">Cancel</button>
