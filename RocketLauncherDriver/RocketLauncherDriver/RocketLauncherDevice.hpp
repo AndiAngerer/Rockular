@@ -8,13 +8,9 @@
 #ifndef ROCKETLAUNCHERDEVICE_HPP_
 #define ROCKETLAUNCHERDEVICE_HPP_
 
-#include "../../hidapi/driver/HidDevice.hpp"
-#include <rcc/Device.hpp>
-#include <rcc/DeviceFactory.hpp>
-
-#include <rtt/os/TimeService.hpp>
-#include <rtt/TaskContext.hpp>
-#include <rtt/os/Mutex.hpp>
+#include "HidDevice.hpp"
+#include <mutex>
+#include <chrono>
 
 namespace rocketlauncher
 {
@@ -37,7 +33,7 @@ namespace rocketlauncher
 	};
 
 	struct PositionData {
-		RTT::os::TimeService::nsecs timestamp;
+		std::chrono::time_point<std::chrono::high_resolution_clock> timestamp;
 		JointPositionData pan;
 		JointPositionData tilt;
 	};
@@ -54,28 +50,27 @@ namespace rocketlauncher
 	const double maxTilt = 0.785;
 	const double minTilt = -0.174;
 
-	class RocketLauncherDevice: public RPI::Device, public RTT::TaskContext
+	class RocketLauncherDevice
 	{
 	private:
 		hidapi::HidDevice hid_device;
-		RPI::DeviceState devicestate;
 		Direction pan;
 		Direction tilt;
 		bool right, left, bottom, top, rocket1Present, rocket2Present, rocket3Present, fire;
 
+		bool deviceOnline;
+
 		PositionData positionData;
+		bool setupDataSent;
 
-		RTT::os::TimeService::nsecs setupDataSent;
-
-		void setDeviceState(RPI::DeviceState);
-		double updatePositionDataAndReturnDeltaPosition(RTT::os::TimeService::Seconds deltaTime, JointPositionData& data, double maxAccel, double maxVelocity, double minPosition, double maxPosition);
+		double updatePositionDataAndReturnDeltaPosition(std::chrono::microseconds deltaMicroseconds, JointPositionData& data, double maxAccel, double maxVelocity, double minPosition, double maxPosition);
 
 		bool sendFeature(unsigned char chr1, unsigned char chr2, unsigned char chr3, unsigned char chr4, unsigned char chr5);
 		bool getFeature(unsigned char *send_feature_buffer);
 
 
 	public:
-		RocketLauncherDevice(std::string name, RPI::parameter_t parameters);
+		RocketLauncherDevice();
 		virtual ~RocketLauncherDevice();
 
 		void setMovement(Direction pan, Direction tilt);
@@ -97,12 +92,8 @@ namespace rocketlauncher
 		bool startHook();
 		void updateHook();
 
-		static RocketLauncherDevice* createDevice(std::string name, RPI::parameter_t parameters);
-		void updateParameters();
-		std::set<std::string> getMutableParameters() const;
-		RPI::DeviceState getDeviceState() const;
-
-		void setEStop(bool estop);
+		void setDeviceOnline(bool online);
+		bool getDeviceOnline() const;
 	};
 
 } /* namespace rocketlauncher */
