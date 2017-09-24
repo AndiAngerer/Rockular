@@ -11,6 +11,7 @@
 #include "HidDevice.hpp"
 #include <mutex>
 #include <chrono>
+#include <thread>
 
 namespace rocketlauncher
 {
@@ -28,7 +29,7 @@ namespace rocketlauncher
 		// starts at 0 even if never adjusted
 		double assumedPosition;
 
-		// -1 if never adjusted
+		// -1 if never adjusted, should be reset when a limit is reached
 		double movedWaySinceCalibration;
 	};
 
@@ -38,7 +39,22 @@ namespace rocketlauncher
 		JointPositionData tilt;
 	};
 
+	struct DeviceData
+	{
+		bool right = false, left = false, bottom = false, top = false, rocket1Present = false, rocket2Present = false, rocket3Present = false; // output sent by device
+	};
+
+	struct CommandData
+	{
+		Direction pan;
+		Direction tilt;
+		bool fire;
+	};
+
 	const std::string dev_rocketlauncher = "rocketlauncher";
+
+	// cycle time for control
+	const int cycleTimeMs = 50;
 
 	// angle velocity in rad/sec
 	const double panMaxVel = 0.32;
@@ -53,21 +69,24 @@ namespace rocketlauncher
 	class RocketLauncherDevice
 	{
 	private:
-		hidapi::HidDevice hid_device;
-		Direction pan;
-		Direction tilt;
-		bool right, left, bottom, top, rocket1Present, rocket2Present, rocket3Present, fire;
+		std::thread updateThread;
+		bool updateThreadRunning;
+		bool cancelUpdateThread;
+		DeviceData lastDeviceData;
 
-		bool deviceOnline;
-
+		void updateCyclic();
+	protected:
 		PositionData positionData;
-		bool setupDataSent;
+		Direction desiredPan;
+		Direction desiredTilt;
+		bool desiredFire;
 
 		double updatePositionDataAndReturnDeltaPosition(std::chrono::microseconds deltaMicroseconds, JointPositionData& data, double maxAccel, double maxVelocity, double minPosition, double maxPosition);
+		void startCyclicUpdate();
+		void stopCyclicUpdate();
 
-		bool sendFeature(unsigned char chr1, unsigned char chr2, unsigned char chr3, unsigned char chr4, unsigned char chr5);
-		bool getFeature(unsigned char *send_feature_buffer);
-
+		virtual DeviceData readDevice(DeviceData last) = 0;
+		virtual bool writeDevice(CommandData data) = 0;
 
 	public:
 		RocketLauncherDevice();
@@ -89,11 +108,10 @@ namespace rocketlauncher
 		double getEstimatedPanPosition() const;
 		double getEstimatedTiltPosition() const;
 
-		bool startHook();
 		void updateHook();
 
-		void setDeviceOnline(bool online);
-		bool getDeviceOnline() const;
+		virtual void setDeviceOnline(bool online) = 0;
+		virtual bool getDeviceOnline() const = 0;
 	};
 
 } /* namespace rocketlauncher */

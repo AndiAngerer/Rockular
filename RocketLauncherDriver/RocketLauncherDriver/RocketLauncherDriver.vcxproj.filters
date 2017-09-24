@@ -33,6 +33,12 @@
     <ClInclude Include="hidapi.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="RocketLauncherDeviceReal.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketLauncherDeviceSim.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +48,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="RocketLauncherDevice.cxx">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketLauncherDeviceReal.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketLauncherDeviceSim.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
