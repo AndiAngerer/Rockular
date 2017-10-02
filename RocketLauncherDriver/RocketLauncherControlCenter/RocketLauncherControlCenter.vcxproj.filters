@@ -61,19 +61,7 @@
     <ClInclude Include="GeneratedFiles\ui_RocketLauncherControlCenter.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\RocketLauncherDevice.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\RocketLauncherDeviceReal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\RocketLauncherDeviceSim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\hidapi.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\HidDevice.hpp">
+    <ClInclude Include="include\IRocketLauncherDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

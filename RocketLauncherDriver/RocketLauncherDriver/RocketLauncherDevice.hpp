@@ -9,6 +9,7 @@
 #define ROCKETLAUNCHERDEVICE_HPP_
 
 #include "HidDevice.hpp"
+#include "IRocketLauncherDevice.h"
 #include <mutex>
 #include <chrono>
 #include <thread>
@@ -16,11 +17,7 @@
 namespace rocketlauncher
 {
 
-	enum Direction {
-		POSITIVE,
-		NEGATIVE,
-		NONE
-	};
+	
 
 	struct JointPositionData {
 		Direction movement;
@@ -66,7 +63,7 @@ namespace rocketlauncher
 	const double maxTilt = 0.785;
 	const double minTilt = -0.174;
 
-	class RocketLauncherDevice
+	class RocketLauncherDevice : public IRocketLauncherDevice
 	{
 	private:
 		std::thread updateThread;
@@ -109,9 +106,6 @@ namespace rocketlauncher
 		double getEstimatedTiltPosition() const;
 
 		void updateHook();
-
-		virtual void setDeviceOnline(bool online) = 0;
-		virtual bool getDeviceOnline() const = 0;
 	};
 
 } /* namespace rocketlauncher */

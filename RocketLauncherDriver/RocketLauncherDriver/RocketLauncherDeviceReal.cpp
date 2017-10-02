@@ -174,4 +174,9 @@ namespace rocketlauncher
 		return result;
 	}
 
+	extern "C" __declspec(dllexport) IRocketLauncherDevice* APIENTRY rocketlauncher::GetRealRocketLauncher()
+	{
+		return new RocketLauncherDeviceReal();
+	}
+
 } // namespace rocketlauncher

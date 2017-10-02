@@ -110,11 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_RocketLauncherControlCenter.h" />
-    <ClInclude Include="include\hidapi.hpp" />
-    <ClInclude Include="include\HidDevice.hpp" />
-    <ClInclude Include="include\RocketLauncherDevice.hpp" />
-    <ClInclude Include="include\RocketLauncherDeviceReal.h" />
-    <ClInclude Include="include\RocketLauncherDeviceSim.h" />
+    <ClInclude Include="include\IRocketLauncherDevice.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="RocketLauncherControlCenter.qrc">

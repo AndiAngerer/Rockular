@@ -39,6 +39,9 @@
     <ClInclude Include="RocketLauncherDeviceSim.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="IRocketLauncherDevice.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

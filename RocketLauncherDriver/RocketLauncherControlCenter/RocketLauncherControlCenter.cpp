@@ -1,7 +1,6 @@
 #include "RocketLauncherControlCenter.h"
 #include<iostream>
-#include "include/RocketLauncherDevice.hpp"
-#include "include/RocketLauncherDeviceSim.h"
+#include "include/IRocketLauncherDevice.h"
 
 using namespace rocketlauncher;
 
@@ -10,7 +9,7 @@ RocketLauncherControlCenter::RocketLauncherControlCenter(QWidget *parent)
 {
 	ui.setupUi(this);
 
-	device = new RocketLauncherDeviceSim();
+	device = rocketlauncher::GetSimulatedRocketLauncher();
 
 	QObject::connect(this->ui.pushButton, &QPushButton::clicked, this, &RocketLauncherControlCenter::buttonClicked);
 	QObject::connect(this, &RocketLauncherControlCenter::positionChanged, this->ui.label, &QLabel::setText);
@@ -20,5 +19,5 @@ RocketLauncherControlCenter::RocketLauncherControlCenter(QWidget *parent)
 
 void RocketLauncherControlCenter::buttonClicked()
 {
-	std::cout << "Clicked";
+	device->setMovement(Direction::POSITIVE, Direction::POSITIVE);
 }

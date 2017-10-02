@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="hidapi.hpp" />
     <ClInclude Include="HidDevice.hpp" />
+    <ClInclude Include="IRocketLauncherDevice.h" />
     <ClInclude Include="RocketLauncherDevice.hpp" />
     <ClInclude Include="RocketLauncherDeviceReal.h" />
     <ClInclude Include="RocketLauncherDeviceSim.h" />

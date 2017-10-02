@@ -2,8 +2,7 @@
 
 #include <QtWidgets/QWidget>
 #include "ui_RocketLauncherControlCenter.h"
-#include "include/RocketLauncherDevice.hpp"
-#include "include/RocketLauncherDeviceSim.h"
+#include "include/IRocketLauncherDevice.h"
 
 using namespace rocketlauncher;
 
@@ -22,5 +21,5 @@ signals:
 	
 private:
 	Ui::RocketLauncherControlCenterClass ui;
-	RocketLauncherDevice *device;
+	IRocketLauncherDevice *device;
 };
